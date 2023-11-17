@@ -1,0 +1,28 @@
+body {
+  padding: 0px;
+  background-color: #f0f0f0;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.pane {
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+#original-code, #copied-code {
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  border-radius: 8px; /* Add rounded corners */
+  padding: 20px; /* Add padding */
+  margin: 0 10px 0 10px; /* Add margin */
+  height: 75vh;
+  width: 95%;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-size: 16px;
+ 
+}
+
