@@ -1,4 +1,4 @@
-ListNode* Solution::mergeKLists(vector<ListNode*> &A) 
+ListNode* Solution::mysteryAlgo(vector<ListNode*> &A) 
 {
     map<int,int> heap;
     ListNode* temp, *ret;

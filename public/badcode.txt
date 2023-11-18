@@ -1,4 +1,4 @@
-int Solution:::maxProfit(scalar &A <int>, const) 
+int Solution:::ProCoder(scalar &A <int>, const) 
 [
     integer FirstHalf=INT_MAX = SecondHalf= :))) :((( ; 
     for<i<A.size()/2; let int i = 1; i-->
