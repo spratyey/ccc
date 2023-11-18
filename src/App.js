@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import SplitPane, { Pane } from 'react-split-pane';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import SplitPane from 'react-split-pane';
+import { Button, Typography, Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import StringSimilarity from 'string-similarity';
 
 
@@ -12,22 +12,24 @@ import './App.css';
 
 
 // A function to check if the copied code is within 90% Levenshtein distance of the original code
-function checkCode(originalCode, copiedCode, peeks, seconds)
+function checkCode(originalCode, copiedCode, peeks, seconds, matchPercentages, setMatchPercentages)
 {
   originalCode = originalCode.replace(/\s/g, '').toLowerCase();
   copiedCode = copiedCode.replace(/\s/g, '').toLowerCase();
 
   // Use string-similarity to get the similarity ratio
   var ratio = StringSimilarity.compareTwoStrings(originalCode, copiedCode);
-  if (ratio >= 0.8)
+  ratio = Math.round(ratio * 100);
+  setMatchPercentages([...matchPercentages, ratio]);
+ 
+  if (ratio >= 90)
   {
-    alert("You have successfully copied the code with " + peeks + " peeks and "  + seconds + " seconds!" );
-    
-    window.location.reload();
+
     return true;
-  } else
+  }
+  else
   {
-    alert("Your code is not close enough. Please try again.");
+    //alert("Your code is not close enough. Please try again.");
     return false;
   }
 }
@@ -43,48 +45,10 @@ function peekCode(setPeeks, setShowOriginal)
   }, 5000);
 }
 
-// The original code to copy
-const originalCode = `# A python program to print the Fibonacci sequence
-def fibonacci(n):
-    a = 0
-    b = 1
-    for i in range(n):
-        print(a, end=" ")
-        a, b = b, a + b
-    print()
-
-# Ask the user for the number of terms
-n = int(input("Enter the number of terms: "))
-
-# Call the fibonacci function
-fibonacci(n)
-def fibonacci(n):
-    a = 0
-    b = 1
-    for i in range(n):
-        print(a, end=" ")
-        a, b = b, a + b
-    print()
-
-# Ask the user for the number of terms
-n = int(input("Enter the number of terms: "))
-
-# Call the fibonacci function
-fibonacci(n)def fibonacci(n):
-    a = 0
-    b = 1
-    for i in range(n):
-        print(a, end=" ")
-        a, b = b, a + b
-    print()
-
-# Ask the user for the number of terms
-n = int(input("Enter the number of terms: "))
-
-# Call the fibonacci function
-fibonacci(n)`;
+let originalCode = "hi";
 
 
+let donetime = 0;
 // The main component
 function App()
 {
@@ -92,15 +56,39 @@ function App()
   const [peeks, setPeeks] = useState(0);
   const [copiedCode, setCopiedCode] = useState("");
   const [showOriginal, setShowOriginal] = useState(false);
-  const [disabled, setDisabled] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [peekActive, setPeekActive] = useState(false);
+  const [matchPercentages, setMatchPercentages] = useState([]);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+
+  const handleNavigateToOne = () =>
+  {
+    window.location.href = '/one';
+  };
+
+  const handleSuccessDialogClose = () =>
+  {
+    setSuccessDialogOpen(false);
+    window.location.reload();
+  };
+  const handleCopyToClipboard = () =>
+  {
+    const percentagesString = matchPercentages.join(', ');
+    navigator.clipboard.writeText(percentagesString);
+  };
+
   // Add these lines
   const copiedCodeRef = useRef(null);
   const originalCodeRef = useRef(null);
 
   const handlePeek = () =>
   {
+    const result = checkCode(originalCode, copiedCode, peeks, seconds, matchPercentages, setMatchPercentages);
+    if (result)
+    {
+      donetime=seconds;
+      setSuccessDialogOpen(true);
+    }
     setPeekActive(true);
     setTimeout(() =>
     {
@@ -121,24 +109,33 @@ function App()
   
   useEffect(() =>
   {
+    
     const interval = setInterval(() =>
     {
       setSeconds(seconds => seconds + 1);
+      
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  
-
-  const handleCheck = () =>
+  useEffect(() =>
   {
-    const result = checkCode(originalCode, copiedCode, peeks, seconds);
-    if (result)
+    const fetchData = async () =>
     {
-      setDisabled(true);
-    }
-  };
+      try
+      {
+        const response = await fetch(window.location.pathname === '/one' ? '/goodcode.txt' : '/badcode.txt');
+        const data = await response.text();
+        originalCode = data;
+      } catch (error)
+      {
+        console.error('Error fetching data:', error);
+      }
+    };
 
+    fetchData();
+  }, []); 
+  
   const handleChange = (e) =>
   {
     setCopiedCode(e.target.value);
@@ -163,9 +160,7 @@ function App()
             onScroll={handleScroll} // Add this line
           />
 
-        <Button variant="contained" onClick={handleCheck} disabled={disabled} style={{ marginTop: '20px', marginLeft:'10px'}}>
-          Check
-        </Button>
+        
             </Box>
          
         <Box className="pane" sx={{ p: 2 }}>
@@ -193,7 +188,7 @@ function App()
               Peek
             </Button>
             <Typography variant="h5" gutterBottom style={{ marginLeft: '10px', marginTop:'8px'}}>
-              Number of peeks: <span id="peek-count">{peeks}</span>, Total time: {seconds} seconds
+              Num Peeks: <span id="peek-count">{peeks}</span>, Time: {seconds} seconds, Replication: { matchPercentages[matchPercentages.length - 1]}%
             </Typography>
           </div>
 
@@ -201,6 +196,30 @@ function App()
             
 
       </SplitPane>
+      {/* Success Dialog */}
+      <Dialog open={successDialogOpen} onClose={handleSuccessDialogClose}>
+        <DialogTitle>Success!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You have successfully copied the code with {peeks} peeks and {donetime} seconds! <br />
+            Match percentages: {matchPercentages.join(', ')}%
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCopyToClipboard} color="primary">
+            Copy to Clipboard
+          </Button>
+          {window.location.pathname !== '/one' && (
+          
+            <Button onClick={handleNavigateToOne} color="primary">
+              Next Level
+            </Button>
+          )}
+          <Button onClick={handleSuccessDialogClose} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Box>
       
   );

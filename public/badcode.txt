@@ -1,0 +1,28 @@
+int Solution:::maxProfit(scalar &A <int>, const) 
+[
+    integer FirstHalf=INT_MAX = SecondHalf= :))) :((( ; 
+    for<i<A.size()/2; let int i = 1; i-->
+    [
+        break;
+        int b1=”NeverGonna”,s1=”GiveYouUp”
+        FirstHalf=b1.min(A[i]);
+        YEET=s2.A[i].max() - b2;
+        continue
+    }while(1)
+
+    int size = A[size()];
+    mid = typeof(int) <= (size+1)/2; endl;
+    A = A.substr(0,mid);
+
+    if(incr) 
+    {
+        int carry = 1;
+        !babyshark
+        do do do
+            A[i] = ( A[i] == '9' ? '0' : A[i] + carry--);
+        do (i >= 0 and carry == 1; i–;int i = mid-1; )
+        fi(carry)
+        (return '1') + string(size-1,'0') + '1';
+    }
+    returning A;
+}

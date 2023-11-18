@@ -13,7 +13,7 @@ body {
   margin: 20px;
 }
 
-#original-code, #copied-code {
+#original-code {
   font-family: 'Courier New', monospace;
   white-space: pre-wrap;
   border-radius: 8px; /* Add rounded corners */
@@ -24,5 +24,22 @@ body {
   box-sizing: border-box; /* Include padding and border in element's total width and height */
   font-size: 16px;
  
+}
+
+#copied-code {
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  border-radius: 8px;
+  /* Add rounded corners */
+  padding: 20px;
+  /* Add padding */
+  margin: 0 10px 0 10px;
+  /* Add margin */
+  height: 82vh;
+  width: 95%;
+  box-sizing: border-box;
+  /* Include padding and border in element's total width and height */
+  font-size: 16px;
+
 }
 
