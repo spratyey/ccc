@@ -73,7 +73,7 @@ function App()
   };
   const handleCopyToClipboard = () =>
   {
-    const percentagesString = peeks+": "+donetime+":"+matchPercentages.join(', ')
+    const percentagesString = peeks + ": " + donetime + ":" + matchPercentages.join(', ');
     navigator.clipboard.writeText(percentagesString);
   };
 
