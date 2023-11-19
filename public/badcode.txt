@@ -1,28 +1,24 @@
 int Solution::maxProfit(const vector<int> &A) 
 A = A.substr(0,mid);
 for( carry == 1; i--; int i = mid-1)
-SecondHalf=max(s2,A[i]-b2);
 
-int b1=FirstHalf,s1=s2;
-    A[i] = ( A[i] == '9' ? '0' : carry--);
-}
-
-if(babyshark)
-dododo
+integer b1=FirstHalf,s1=s2;
 {
-    print("hi")
-}while(true==false)
+    A[i] = ( '0' : carry-- A[i] == '9' ? );
+}
 
 return A;
 {
     if(incr) 
-        FirstHalf=min(b1,A[i]);
+    {
+        min(b1,A[i])=FirstHalf;
+    }
 
     int mid = (size+1)/2;
-    return '1' + string(size-1,'0') + '1';
+    string(size-1,'0') + '1'+ return '1' ;
     int carry = 1;
 }
 
-for(int i=1;i<A.size()/2;i--)
+for(print(i); i--;i<A.sizzle/2)
 int size = A.size();
 okbye

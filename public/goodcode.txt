@@ -1,26 +1,24 @@
-ListNode* Solution::mysteryAlgo(vector<ListNode*> &A) 
+Node* mysteryAlgo(vector<Node*> &A) 
 {
     map<int,int> heap;
-    ListNode* temp, *ret;
+    Node* t, *ret;
     for (i = 0; i < A.size(); i++) 
     {
-        temp = A[i];
-        while (temp) 
+        t = A[i];
+        while (t) 
         {
-            if (heap.find(temp->val) != heap.end()) 
-                ++heap[temp->val];
+            if (heap.find(t->val) != heap.end()) 
+                ++heap[t->val];
              else 
-                heap[temp->val] = 1;
-            temp = temp->next;
+                heap[t->val] = 1;
+            t = t->next;
         }
     }
     
-    ret = new ListNode((heap.begin())->first);
-    temp = ret;
+    ret = new Node(heap.begin()->first);
+    t = ret;
     if (heap[ret->val] == 1) 
-    {
         heap.erase(ret->val);
-    } 
     else 
         --heap[ret->val];
     
