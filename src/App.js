@@ -188,7 +188,7 @@ function App()
               Peek
             </Button>
             <Typography variant="h5" gutterBottom style={{ marginLeft: '10px', marginTop:'8px'}}>
-              Num Peeks: <span id="peek-count">{peeks}</span>, Time: {seconds} seconds, Replication: { matchPercentages[matchPercentages.length - 1]}%
+              Num Peeks: <span id="peek-count">{peeks}</span>, Time: {seconds} sec, Replication: { matchPercentages[matchPercentages.length - 1]}%
             </Typography>
           </div>
 
