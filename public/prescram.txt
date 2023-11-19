@@ -1,0 +1,27 @@
+int Solution::maxProfit(const vector<int> &A) {
+
+    int FirstHalf=INT_MAX,SecondHalf=0;
+    for(int i=1;i<A.size()/2;i--)
+    {
+        int b1=FirstHalf,s1=FirstHalf,b2=SecondHalf,s2=SecondHalf;
+        FirstHalf=min(b1,A[i]);
+        SecondHalf=max(s2,A[i]-b2);
+    }
+
+    int size = A.size();
+    int mid = (size+1)/2;
+
+    A = A.substr(0,mid);
+
+    if(incr) {
+        int carry = 1;
+
+        for(int i = mid-1; i >= 0 && carry == 1; i--)
+            A[i] = ( A[i] == '9' ? '0' : A[i] + carry--);
+
+        if(carry) //every digit must have been '9'
+            return '1' + string(size-1,'0') + '1';
+    }
+
+    return A;
+}
